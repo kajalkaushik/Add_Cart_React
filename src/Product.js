@@ -4,18 +4,15 @@ import ProductDetails from './ProductDetails';
 // import { Route, Link, Switch } from "react-router-dom";
 
 const Product = () => {
-
     const [products, setProducts] = useState([]); // Use plural 'products' for clarity
     const [count, setCount] = useState(0);
     const [cart, setCart] = useState([]);
     const [showdetail, setShowDetail] = useState(false);
-
     const [page, setPage] = useState(1);
 
     const prevClick = () => {
         setPage((prev) => prev - 1);
     };
-
     const nextClick = () => {
         setPage((prev) => prev + 1);
     };
@@ -29,11 +26,9 @@ const Product = () => {
         fetchData();
     }, []);
 
-
     const addtoCart = (product) => {
         setCount(count + 1);
         setCart([...cart, product]);
-        console.log(cart);
     };
 
     const removefromCart = (index) => {
@@ -42,10 +37,17 @@ const Product = () => {
         setCount(count - 1);
     };
 
+    const handleShowDetail = (product) => {
+        setShowDetail(product);
+    }
+    const handleCloseDetails = () => {
+        setShowDetail(false)
+    }
+
     return (
         <>
             {showdetail ? (
-                <ProductDetails />
+                <ProductDetails product={showdetail} onClose={handleCloseDetails} addtoCart={addtoCart} />
             )
                 :
                 (
@@ -59,7 +61,8 @@ const Product = () => {
                                         <h2 className="font-bold">{product.title}</h2>
                                         <p>{product.description}</p>
                                         <p className='font-bold text-uppercase'>{product.category}</p>
-                                        <button type="button" class="font-semibold bg-gray w-fit text-white px-3 py-1.5" onClick={() => addtoCart(product)}>More Details</button>
+                                        <button type="button" className="font-semibold bg-gray w-fit text-white px-3 py-1.5" onClick={() => addtoCart(product)}>Add to Cart</button>
+                                        <button type="button" className="" onClick={() => handleShowDetail(product)}>Show Details</button>
                                     </div>
                                 ))
                             ) : (
