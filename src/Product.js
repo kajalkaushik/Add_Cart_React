@@ -28,13 +28,24 @@ const Product = () => {
 
     const addtoCart = (product) => {
         setCount(count + 1);
-        setCart([...cart, product]);
+        // setCart([...cart, product]);
+        setCart((prevCart) => {
+            const existingProduct = prevCart.find((item) => item.id === product.id);
+            if (existingProduct) {
+                return prevCart.map((item) =>
+                    item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+                );
+            } else {
+                return [...prevCart, { ...product, quantity: 1 }];
+            }
+        });
     };
 
     const removefromCart = (index) => {
         const newCart = cart.filter((_, i) => i !== index);
+        const currentCartPro = cart.filter((_, i) => i == index);
         setCart(newCart);
-        setCount(count - 1);
+        setCount(count - currentCartPro[0].quantity);
     };
 
     const handleShowDetail = (product) => {
