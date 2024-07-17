@@ -3,9 +3,7 @@ import React, { useState } from "react";
 import './index.css';
 
 const Cart = ({ cart, count, removefromCart }) => {
-
     const [cartShow, setcartShow] = useState(true);
-
     function showCart() {
         setcartShow(!cartShow);
     }
